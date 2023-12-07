@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
     {
-        fullName: { type: String, required: true },
-        email: { type: String, unique: true, required: true },
+        fullName: { type: String, required: [true, "please enter your name"] ,minlentgh: 3,maxlengh:30},
+        email: { type: String, unique: true, required: [true ,"please provide email"] },
         password: { type: String, required: true },
         phoneNumber: { type: String, required: false },
-        image: { type: String, required: false }
+        image: { type: String, required: false },
+        role: {type: String, default: "user" , enum: [ "admin", "user"] }
         
     },
     {
@@ -16,6 +17,18 @@ const userSchema = new Schema(
  
 
 );
+// Hashed the password before saving the user into database
+UserSchema.pre("save", async function () {
+    // console.log(this.modifiedPaths());
+    // console.log(this.isModified("name"));
+    // Only run this 👇 function if password was modified (not on other update functions)
+    if (!this.isModified("password")) return
+    
+    this.password = await bcrypt.hash(this.password, 10)
+})
+
+
+
 const user= mongoose.model("User",userSchema)
 
 module.exports = mongoose.model('User', userSchema);
