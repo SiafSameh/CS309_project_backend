@@ -8,8 +8,17 @@ ProductSchema = new Schema
         category: { type: String,  lowercase: true , },
         description: {type: String, required: false },
         image: { type: String},
-        numOfReviews: {    type: Number, default: 0,  },
+        rating: {type: Number, default: 0,require: true},
+        numOfReviews: {    type: Number, default: 0, require: true },
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+            required: true,
+          },
 
+    },
+    {
+        timestamps: true
     }
 );
   const ProductModel = mongoose.model('Product', ProductSchema);
