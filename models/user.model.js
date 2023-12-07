@@ -8,6 +8,7 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
+        bio: {type: String, required: false},
         role: {type: String, default: "user" , enum: [ "admin", "user"] }
         
     },
