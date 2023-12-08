@@ -15,8 +15,10 @@ router.post('/adduser',  async (req, res) => {
             res.send( " is already exist");
         }
         const user = new User(userParam);
-        
+        const token = await user.generateAuthToken()
+
          await user.save();
+         res.status(201).send({user, token})
          res.send("user added successfully ")
 
     }catch(err)
@@ -36,17 +38,19 @@ router.post('/login',async(req,res)=> {
         console.log(ismatch)
         if(!ismatch){res.status(401).json("wrong password or email")}
         // res.status(200).json(user)
-        const accessToken = jwt.sign(
-            {
-                id: user._id,
-                isAdmin: user.isAdmin,
-            },
-            process.env.JWT_SEC,
-                {expiresIn:"3d"}
-            );
+        const token = await user.generateAuthToken()
+        res.send({ user, token})    
+        // const accessToken = jwt.sign(
+        //     {
+        //         id: user._id,
+        //         isAdmin: user.isAdmin,
+        //     },
+        //     process.env.JWT_SEC,
+        //         {expiresIn:"3d"}
+        //     );
       
-            const { password, ...others } = user._doc;  
-            res.status(200).json({...others, accessToken});
+        //     const { password, ...others } = user._doc;  
+        //     res.status(200).json({...others, accessToken});
     } catch (error) {
         res.status(500).send('server error: '+ err);
     }

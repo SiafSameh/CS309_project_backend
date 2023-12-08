@@ -3,9 +3,9 @@ const Product  = require('../models/product.model')
 
 
 const {
-  verifyToken,
+ 
   verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
+  verifyTokenAndAdmin,auth
 } = require("./verifyToken");
 
 

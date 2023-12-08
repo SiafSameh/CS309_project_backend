@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const userRoutes = require('./routes/user')
 const authRoutes = require('./routes/auth')
 const productRoutes = require('./routes/product')
-// const cartRoutes = require('./routes/cart')
+const cartRoutes = require('./routes/cart')
 
 const mongouri = "mongodb://localhost:27017/data"
 
@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended: false}))
 app.use("/api/users" ,userRoutes);
 app.use("/api/auth" ,authRoutes);
 app.use("/api/products" ,productRoutes);
-// app.use("api/cart" cartRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get('/', (req, res) => {
     res.send('server runing');
