@@ -18,7 +18,7 @@ const userSchema = new Schema(
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
         bio: {type: String, required: false},
-        isAdmin: {type: Boolean, default: false   }
+        isAdmin: {type: Boolean, default: false }
         
     },
     {
@@ -37,15 +37,7 @@ userSchema.pre('save', async function(next) {
     next()
 })
 
-// // Hashed the password before saving the user into database
-// userSchema.pre("save", async function () {
-//     // console.log(this.modifiedPaths());
-//     // console.log(this.isModified("name"));
-//     // Only run this 👇 function if password was modified (not on other update functions)
-//     if (!this.isModified("password")) return
-    
-//     this.password = await bcrypt.hash(this.password, 10)
-// })
+
 
 
 

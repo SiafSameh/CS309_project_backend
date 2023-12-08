@@ -30,6 +30,8 @@ router.get('/find/:id', async (req, res) => {
 });
 
 router.put('/user/:id', async (req, res) => {
+    
+    
     try {
         const id = req.params.id;
         const updatedData = req.body;
@@ -46,18 +48,5 @@ router.put('/user/:id', async (req, res) => {
     }
 });
 
-// router.get('/user/:email', async(req,res) =>{
-//     try {
-//         const email = req.params.email;
-//         const user = await User.findOne({email:email});
-//         if (!user) {
-//             return res.status(404).send(  `User with email  not found`)
-//         }
-//         res.status(200).json(user);
-        
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// })
 
 module.exports =router;
