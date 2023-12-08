@@ -8,10 +8,7 @@ const userSchema = new Schema(
         fullName: { type: String, required: [true, "please enter your name"] ,minlentgh: 3,maxlengh:30,uniqe: true},
         email: { type: String, unique: true, required: [true ,"please provide email"],
             match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-            //  validate( value ) {
-            //     if( !validator.isEmail( value )) {
-            //         throw new Error( 'Email is invalid' )
-            //     } }
+           
             },
         
         password: { type: String, required: true },

@@ -2,8 +2,9 @@ const router = require("express").Router();
 const res = require("express/lib/response");
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken");
 
-// register, signin  , signup
+//  signin  , signup
 router.post('/adduser',  async (req, res) => {
 
     try{

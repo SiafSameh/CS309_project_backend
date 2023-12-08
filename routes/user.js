@@ -1,7 +1,10 @@
 const User = require('../models/user.model')
-
-
 const router = require("express").Router();
+const {
+    verifyToken,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin,
+  } = require("./verifyToken");
 
 
 router.get('/listusers', async (req, res) => {
@@ -29,7 +32,7 @@ router.get('/find/:id', async (req, res) => {
     }
 });
 
-router.put('/user/:id', async (req, res) => {
+router.put('/user/:id',verifyTokenAndAuthorization, async (req, res) => {
     
     
     try {
@@ -39,9 +42,7 @@ router.put('/user/:id', async (req, res) => {
         // if (req.body.id=== id || req.params.isAdmin) {
             const user = await User.findByIdAndUpdate(id, updatedData, { new: true });
             res.status(200).json(user);
-        // }else{
-        //   return   res.status(403).send("cannot edit" );
-        // }
+        
         
     } catch (error) {
         res.status(500).send(error.message );
