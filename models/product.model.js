@@ -8,6 +8,7 @@ ProductSchema = new Schema
         description: {type: String, required: false },
         image: { type: String, required: true  },
         rating: {type: Number, default: 0,required: false},
+        size: {type: String ,required:true}
         // numOfReviews: {    type: Number, default: 0, required: true },
         // user: {
         //     type: mongoose.Types.ObjectId,
