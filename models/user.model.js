@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
     {
-        fullName: { type: String, required: [true, "please enter your name"] ,minlentgh: 3,maxlengh:30},
+        fullName: { type: String, required: [true, "please enter your name"] ,minlentgh: 3,maxlengh:30,uniqe: true},
         email: { type: String, unique: true, required: [true ,"please provide email"],
             match: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/ },
         
@@ -11,7 +11,7 @@ const userSchema = new Schema(
         phoneNumber: { type: String, required: false },
         image: { type: String, required: false },
         bio: {type: String, required: false},
-        role: {type: String, default: "user" , enum: [ "admin", "user"] }
+        isAdmin: {type: String, default: "user" ,  }
         
     },
     {
