@@ -1,10 +1,11 @@
+
+
 const router = require("express").Router();
 const res = require("express/lib/response");
 const User = require('../models/user.model')
 const bcrypt = require('bcrypt')
-const jwt = require("jsonwebtoken");
 
-//  signin  , signup
+// register, signin  , signup
 router.post('/adduser',  async (req, res) => {
 
     try{
@@ -15,7 +16,7 @@ router.post('/adduser',  async (req, res) => {
             res.send( " is already exist");
         }
         const user = new User(userParam);
-        
+
          await user.save();
          res.send("user added successfully ")
 
@@ -23,10 +24,10 @@ router.post('/adduser',  async (req, res) => {
     {
         res.status(500).send('server error: '+ err);
     }
-    
+
 });
 router.post('/login',async(req,res)=> {
-    
+
     try {
         const user= await User.findOne({email: req.body.email})
         if(!user){
@@ -35,18 +36,7 @@ router.post('/login',async(req,res)=> {
         const ismatch = await bcrypt.compare(req.body.password,user.password)
         console.log(ismatch)
         if(!ismatch){res.status(401).json("wrong password or email")}
-        // res.status(200).json(user)
-        const accessToken = jwt.sign(
-            {
-                id: user._id,
-                isAdmin: user.isAdmin,
-            },
-            process.env.JWT_SEC,
-                {expiresIn:"3d"}
-            );
-      
-            const { password, ...others } = user._doc;  
-            res.status(200).json({...others, accessToken});
+        res.status(200).json(user)
     } catch (error) {
         res.status(500).send('server error: '+ err);
     }

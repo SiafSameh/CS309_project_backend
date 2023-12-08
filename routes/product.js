@@ -1,18 +1,10 @@
-const router = require("express").Router();
+
 const Product  = require('../models/product.model')
-
-
-const {
-  verifyToken,
-  verifyTokenAndAuthorization,
-  verifyTokenAndAdmin,
-} = require("./verifyToken");
-
 
 
 //CREATE
 
-router.post("/add", verifyTokenAndAdmin, async (req, res) => {
+router.post("/add",  async (req, res) => {
   const newProduct = new Product(req.body);
 
   try {
@@ -24,7 +16,7 @@ router.post("/add", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
@@ -40,7 +32,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id",  async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted...");
@@ -61,7 +53,7 @@ router.get("/find/:id", async (req, res) => {
 
 //GET ALL PRODUCTS
 router.get("/", async (req, res) => {
-    
+
     try {
         const products = await Product.find({ });
         res.status(200).json(products);
@@ -71,7 +63,6 @@ router.get("/", async (req, res) => {
   });
 
 module.exports = router;
-
 
 
 
