@@ -6,39 +6,58 @@ const router = require("express").Router();
 
 router.get('/listusers', async (req, res) => {
     try {
-        const users = await User.find({ role: "user"});
+        const users = await User.find({ });
         res.status(200).json(users);
     } catch (error) {
         res.status(500).json({message: error.message})
     } 
 });
 
-router.get('/user/:id', async (req, res) => {
+
+router.get('/find/:id', async (req, res) => {
     
     try {
         // req id 
         const id = req.params.id;
         // find by id in users 
-        
+        if(req.params.isAdmin){
         const user = await User.findById(id);
         res.status(200).json(user);
+        } else res.status(200).json("You are not allowed")
     } catch (error) {
         res.status(500).json({message: error.message})
     }
 });
 
-router.get('/user/:email', async(req,res) =>{
+router.put('/user/:id', async (req, res) => {
     try {
-        const email = req.params.email;
-        const user = await User.findOne({email:email});
-        if (!user) {
-            return res.status(404).send(  `User with email  not found`)
-        }
-        res.status(200).json(user);
+        const id = req.params.id;
+        const updatedData = req.body;
+        
+        // if (req.body.id=== id || req.params.isAdmin) {
+            const user = await User.findByIdAndUpdate(id, updatedData, { new: true });
+            res.status(200).json(user);
+        // }else{
+        //   return   res.status(403).send("cannot edit" );
+        // }
         
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(500).send(error.message );
     }
-})
+});
+
+// router.get('/user/:email', async(req,res) =>{
+//     try {
+//         const email = req.params.email;
+//         const user = await User.findOne({email:email});
+//         if (!user) {
+//             return res.status(404).send(  `User with email  not found`)
+//         }
+//         res.status(200).json(user);
+        
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// })
 
 module.exports =router;
