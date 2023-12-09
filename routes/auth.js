@@ -1,5 +1,3 @@
-
-
 const router = require("express").Router();
 const res = require("express/lib/response");
 const User = require('../models/user.model')
@@ -40,6 +38,14 @@ router.post('/login',async(req,res)=> {
     } catch (error) {
         res.status(500).send('server error: '+ err);
     }
-})
+});
+router.delete("/:id", async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("User has been deleted...");
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 module.exports =router;
